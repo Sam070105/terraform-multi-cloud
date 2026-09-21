@@ -1,8 +1,8 @@
 # This is the provider block for Azure
 
 provider "azurerm" {
-    features {}
-    subscription_id = "your_subscription_id"     # Enter your Azure subscription ID
+  features {}
+  subscription_id = "your_subscription_id" # Enter your Azure subscription ID
 }
 
 # Create a resource group
@@ -37,7 +37,7 @@ resource "azurerm_network_interface" "nicaz" {
   location            = azurerm_resource_group.resourceaz.location
   resource_group_name = azurerm_resource_group.resourceaz.name
 
-# Configuring IP configuration for that interface
+  # Configuring IP configuration for that interface
 
   ip_configuration {
     name                          = "ipaz"
@@ -68,7 +68,7 @@ resource "azurerm_linux_virtual_machine" "vmaz" {
     storage_account_type = "Standard_LRS"
   }
 
-  source_image_reference {         # This is the image reference format (fetched by AWS CLI)
+  source_image_reference { # This is the image reference format (fetched by AWS CLI)
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
     sku       = "22_04-lts"
@@ -85,7 +85,7 @@ resource "azurerm_storage_account" "storageaccaz" {
   resource_group_name      = azurerm_resource_group.resourceaz.name
   location                 = azurerm_resource_group.resourceaz.location
   account_tier             = "Standard"
-  account_replication_type = "LRS"     # Locally redundant storage(LRS) means one zone availability
+  account_replication_type = "LRS" # Locally redundant storage(LRS) means one zone availability
 }
 
 # Creating a Blob Container
@@ -108,16 +108,16 @@ resource "azurerm_cosmosdb_account" "cosmosdbaz" {
   kind                = "MongoDB"
 
   capabilities {
-    name = "EnableMongo"   # This will enable us to use MongoDB API
+    name = "EnableMongo" # This will enable us to use MongoDB API
   }
-  
+
   consistency_policy {
-    consistency_level       = "Session"    # Session policy is more cost effective
+    consistency_level = "Session" # Session policy is more cost effective
   }
 
   geo_location {
     location          = "centralindia"
-    failover_priority = 0       # This is a region wise priority level if a failover were to occur 
+    failover_priority = 0 # This is a region wise priority level if a failover were to occur 
   }
 }
 
@@ -125,7 +125,7 @@ resource "azurerm_cosmosdb_account" "cosmosdbaz" {
 
 resource "azurerm_cosmosdb_sql_database" "sqldbaz" {
   name                = "sqldbaz"
-  resource_group_name = "resourceaz"   # We can directly write our resource name as well with ""
+  resource_group_name = "resourceaz" # We can directly write our resource name as well with ""
   account_name        = "cosmosdbaz"
   throughput          = 400
 }
@@ -137,11 +137,11 @@ resource "azurerm_cosmosdb_sql_container" "sqlaz" {
   resource_group_name = "resourceaz"
   account_name        = "cosmosdbaz"
   database_name       = "sqldbaz"
-  partition_key_paths  = ["/UserID"]
+  partition_key_paths = ["/UserID"]
 
   # Define a few basic attributes
   unique_key {
-    paths = ["/UserID"]    # Unique key to identify the data uniquely
+    paths = ["/UserID"] # Unique key to identify the data uniquely
   }
 }
 

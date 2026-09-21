@@ -1,20 +1,20 @@
 # This is the provider block of AWS, which will assign resources on AWS
 
 provider "aws" {
-  region  = "ap-south-2"
+  region = "ap-south-2"
 }
 
 # Creating an VM in AWS
 
 resource "aws_instance" "vmaws" {
-  ami           = "ami-0867df9d01e38f97d"     # You can choose your AMI id from AWS EC2 console
+  ami           = "ami-0867df9d01e38f97d" # You can choose your AMI id from AWS EC2 console
   instance_type = "t3.micro"
 }
 
 # Creating a VPC in AWS (with 1 subnet)
 
 resource "aws_vpc" "vpcaws" {
-  cidr_block           = "10.0.0.0/16"    # This is CIDR block of VPC
+  cidr_block           = "10.0.0.0/16" # This is CIDR block of VPC
   enable_dns_support   = true
   enable_dns_hostnames = true
 }
@@ -36,9 +36,9 @@ resource "aws_s3_bucket" "s3bucketaws" {
 
 # DynamoDB Table
 resource "aws_dynamodb_table" "tableaws" {
-  name           = "tableaws"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "UserID"
+  name         = "tableaws"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "UserID"
 
   attribute {
     name = "UserID"

@@ -47,11 +47,11 @@ variable "dynamodb_table_name" {
 
 variable "dynamodb_user_item" {
   description = "User item attributes for the DynamoDB table"
-  type = map(any)
+  type        = map(any)
   default = {
-    UserID      = "123"
-    name        = "Alice"
-    age         = 30
+    UserID       = "123"
+    name         = "Alice"
+    age          = 30
     phone_number = "1234567890"
   }
 }
